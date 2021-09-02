@@ -5,12 +5,13 @@ use Alura\Doctrine\Helper\EntityManagerFactory;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$student = new Student();
-$student->setName($argv[1]);
-
 $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
-$entityManager->persist($student);
+$id = $argv[1];
+$newName = $argv[2];
+
+$student = $entityManager->find(Student::class, $id);
+$student->setName($newName);
 
 $entityManager->flush();

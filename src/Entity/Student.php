@@ -19,21 +19,20 @@ class Student
      */
     private $name;
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): string
+    public function setName(string $name): self
     {
-        return $this->name = $name;
+        $this->name = $name;
+        return $this;
     }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
 
 }

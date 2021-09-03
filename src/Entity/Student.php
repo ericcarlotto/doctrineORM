@@ -2,6 +2,9 @@
 
 namespace Alura\Doctrine\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 /**
  * @Entity
  */
@@ -18,6 +21,21 @@ class Student
      * @Column (type="string")
      */
     private $name;
+    /**
+     * @OneToMany(targetEntity="Fone", mappedBy="student", cascade={"remove", "persist"})
+     */
+    private $fones;
+
+    /**
+     * @ManyToMany(targetEntity="Course", mappedBy="students")
+     */
+    private $courses;
+
+    public function __construct()
+    {
+        $this->fones = new ArrayCollection();
+        $this->courses = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -35,4 +53,30 @@ class Student
         return $this;
     }
 
+    public function addFone(Fone $fone)
+    {
+        $this->fones->add($fone);
+        $fone->setStudent($this);
+        return $this;
+    }
+
+    public function getFones(): Collection
+    {
+        return $this->fones;
+    }
+
+    public function addCourses(Course $course): self
+    {
+        if ($this->courses->contains($course)) {
+            return $this;
+        }
+        $this->courses->add($course);
+        $course->addStudent($this);
+        return $this;
+    }
+
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
 }

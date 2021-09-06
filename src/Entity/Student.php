@@ -22,7 +22,7 @@ class Student
      */
     private $name;
     /**
-     * @OneToMany(targetEntity="Fone", mappedBy="student", cascade={"remove", "persist"})
+     * @OneToMany(targetEntity="Fone", mappedBy="student", cascade={"remove", "persist"}, fetch="EAGER")
      */
     private $fones;
 
@@ -75,6 +75,7 @@ class Student
         return $this;
     }
 
+    /** @return Course[] */
     public function getCourses(): Collection
     {
         return $this->courses;
